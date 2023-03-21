@@ -272,7 +272,7 @@
 			Controls.Add(btnSave);
 			Controls.Add(dataGridView1);
 			Controls.Add(txtSearch);
-			Controls.Add(label4);
+			 Controls.Add(label4);
 			Controls.Add(txtNote);
 			Controls.Add(label3);
 			Controls.Add(txtTitle);

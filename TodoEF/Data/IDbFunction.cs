@@ -11,7 +11,7 @@ namespace TodoEF.Data
 	{
 		public bool AddItem(string title, string note);
 		//public bool SearchRecord(string search);
-		public bool DeleteItem(int id);
+		//public bool DeleteItem(int id);
 		//public List<Todo> GetAll();
 	}
 }

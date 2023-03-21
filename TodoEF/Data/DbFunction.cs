@@ -5,11 +5,13 @@ namespace TodoEF.Data
 {
 	public class DbFunction : IDbFunction
 	{
+		//private readonly Form1 _form1;
 		TodoDbContext dbContext;
 
 		public DbFunction() 
 		{ 
 			dbContext = new TodoDbContext();
+		//	_form1 = new Form1();
 		}
 
 		public bool AddItem(string title, string note)
@@ -43,12 +45,8 @@ namespace TodoEF.Data
 			catch(Exception ex)
 			{
 				MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK,MessageBoxIcon.Error);
-			}
+			} 
 			return false;
-		}
-		public bool DeleteItem(int id)
-		{
-			return true;
 		}
 	}
 	

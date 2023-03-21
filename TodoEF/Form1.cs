@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.Windows.Forms;
 using TodoEF.Data;
 using TodoEF.Model;
 
@@ -61,7 +62,6 @@ namespace TodoEF
 			{
 				var id = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();
 				if (id == null) return;
-
 				var todo = _dbContext.TodoApp.Find(int.Parse(id));
 				if (todo == null)
 				{
@@ -86,25 +86,11 @@ namespace TodoEF
 		private void btnDelete_Click(object sender, EventArgs e)
 		{
 			try
-			{
-				
-					int id = Convert.ToInt32(dataGridView1.SelectedRows[dataGridViewId.Index].Cells[0].Value);
-					//Convert.ToInt32(dataGridView1.Rows[dataGridViewId.Index].Cells[0].Value);
-					var todoToDelete = _dbContext.TodoApp.Find(id);
-					if (todoToDelete != null)
-					{
-						// Remove the Todo entity from the database context
-						_dbContext.TodoApp.Remove(todoToDelete);
-
-						// Save the changes to the database
-						_dbContext.SaveChanges();
-						display();
-					}
-					else
-					{
-						MessageBox.Show("Selected row not found in the database.");
-					}
-				
+			{ 
+				var t = _dbContext.TodoApp.Find((int)dataGridView1.SelectedCells[0].Value);
+				_dbContext.TodoApp.Remove(t);
+				_dbContext.SaveChanges(true);
+				display();
 			}
 			catch (Exception ex)
 			{
