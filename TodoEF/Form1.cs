@@ -1,4 +1,5 @@
 
+using Microsoft.EntityFrameworkCore;
 using TodoEF.Data;
 using TodoEF.Model;
 
@@ -8,7 +9,7 @@ namespace TodoEF
 	{
 		private readonly IDbFunction _dbFunction;
 		private TodoDbContext _dbContext = new TodoDbContext();
-		Todo todo = new Todo();
+		//Todo todo = new Todo();
 
 		public Form1()
 		{
@@ -84,10 +85,26 @@ namespace TodoEF
 		{
 			try
 			{
-				var id = _dbContext.TodoApp.Find((int)dataGridView1.SelectedCells[0].Value);
-				_dbContext.TodoApp.Remove(id);
-				_dbContext.SaveChanges(true);
-				display();
+				var id = (int)dataGridView1.SelectedCells[0].Value;
+				if (id != null)
+				{
+					var todoItem = _dbContext.TodoApp.Find(id);
+
+					if (todoItem != null)
+					{
+						var confirmResult = MessageBox.Show("Are you sure you want to delete this item?",
+														   "Confirmation",
+														   MessageBoxButtons.YesNo,
+														   MessageBoxIcon.Warning);
+						if (confirmResult == DialogResult.Yes)
+						{
+							_dbContext.TodoApp.Remove(todoItem);
+							_dbContext.SaveChanges();
+							display();
+						}
+					}
+				}
+
 			}
 			catch (Exception ex)
 			{

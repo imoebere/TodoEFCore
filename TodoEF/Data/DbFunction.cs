@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.EntityFrameworkCore;
 using TodoEF.Model;
 
 namespace TodoEF.Data
@@ -8,10 +9,9 @@ namespace TodoEF.Data
 		//private readonly Form1 _form1;
 		TodoDbContext dbContext;
 
-		public DbFunction() 
-		{ 
+		public DbFunction()
+		{
 			dbContext = new TodoDbContext();
-		//	_form1 = new Form1();
 		}
 
 		public bool AddItem(string title, string note)
@@ -20,7 +20,7 @@ namespace TodoEF.Data
 			{
 				if (string.IsNullOrEmpty(title) || string.IsNullOrEmpty(note))
 				{
-					MessageBox.Show("Fields Should not be empty","Waring", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+					MessageBox.Show("Fields Should not be empty", "Waring", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 				}
 				else
 				{
@@ -42,12 +42,13 @@ namespace TodoEF.Data
 					}
 				}
 			}
-			catch(Exception ex)
+			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK,MessageBoxIcon.Error);
-			} 
+				MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+			}
 			return false;
 		}
+		
+			
 	}
-	
 }
