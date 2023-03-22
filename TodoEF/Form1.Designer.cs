@@ -38,6 +38,10 @@
 			label4 = new Label();
 			txtSearch = new TextBox();
 			dataGridView1 = new DataGridView();
+			dataGridViewId = new DataGridViewTextBoxColumn();
+			titleDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+			descriptionDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+			CreatedDate = new DataGridViewTextBoxColumn();
 			todoBindingSource = new BindingSource(components);
 			btnSave = new Button();
 			Id = new DataGridViewTextBoxColumn();
@@ -51,10 +55,6 @@
 			lblRecord = new Label();
 			btnDelete = new Button();
 			btnUpdate = new Button();
-			dataGridViewId = new DataGridViewTextBoxColumn();
-			titleDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-			descriptionDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-			CreatedDate = new DataGridViewTextBoxColumn();
 			((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
 			((System.ComponentModel.ISupportInitialize)todoBindingSource).BeginInit();
 			((System.ComponentModel.ISupportInitialize)todoDbContextBindingSource).BeginInit();
@@ -146,6 +146,30 @@
 			dataGridView1.TabIndex = 7;
 			dataGridView1.CellContentClick += dataGridView1_CellContentClick;
 			// 
+			// dataGridViewId
+			// 
+			dataGridViewId.DataPropertyName = "Id";
+			dataGridViewId.HeaderText = "Id";
+			dataGridViewId.Name = "dataGridViewId";
+			// 
+			// titleDataGridViewTextBoxColumn
+			// 
+			titleDataGridViewTextBoxColumn.DataPropertyName = "Title";
+			titleDataGridViewTextBoxColumn.HeaderText = "Title";
+			titleDataGridViewTextBoxColumn.Name = "titleDataGridViewTextBoxColumn";
+			// 
+			// descriptionDataGridViewTextBoxColumn
+			// 
+			descriptionDataGridViewTextBoxColumn.DataPropertyName = "Description";
+			descriptionDataGridViewTextBoxColumn.HeaderText = "Description";
+			descriptionDataGridViewTextBoxColumn.Name = "descriptionDataGridViewTextBoxColumn";
+			// 
+			// CreatedDate
+			// 
+			CreatedDate.DataPropertyName = "CreatedDate";
+			CreatedDate.HeaderText = "CreatedDate";
+			CreatedDate.Name = "CreatedDate";
+			// 
 			// todoBindingSource
 			// 
 			todoBindingSource.DataSource = typeof(Model.Todo);
@@ -155,9 +179,9 @@
 			btnSave.BackColor = Color.Green;
 			btnSave.Font = new Font("Arial", 12F, FontStyle.Bold, GraphicsUnit.Point);
 			btnSave.ForeColor = SystemColors.ActiveCaptionText;
-			btnSave.Location = new Point(251, 288);
+			btnSave.Location = new Point(251, 287);
 			btnSave.Name = "btnSave";
-			btnSave.Size = new Size(66, 40);
+			btnSave.Size = new Size(66, 36);
 			btnSave.TabIndex = 8;
 			btnSave.Text = "Save";
 			btnSave.UseVisualStyleBackColor = false;
@@ -236,30 +260,7 @@
 			btnUpdate.TabIndex = 11;
 			btnUpdate.Text = "Update";
 			btnUpdate.UseVisualStyleBackColor = false;
-			// 
-			// dataGridViewId
-			// 
-			dataGridViewId.DataPropertyName = "Id";
-			dataGridViewId.HeaderText = "Id";
-			dataGridViewId.Name = "dataGridViewId";
-			// 
-			// titleDataGridViewTextBoxColumn
-			// 
-			titleDataGridViewTextBoxColumn.DataPropertyName = "Title";
-			titleDataGridViewTextBoxColumn.HeaderText = "Title";
-			titleDataGridViewTextBoxColumn.Name = "titleDataGridViewTextBoxColumn";
-			// 
-			// descriptionDataGridViewTextBoxColumn
-			// 
-			descriptionDataGridViewTextBoxColumn.DataPropertyName = "Description";
-			descriptionDataGridViewTextBoxColumn.HeaderText = "Description";
-			descriptionDataGridViewTextBoxColumn.Name = "descriptionDataGridViewTextBoxColumn";
-			// 
-			// CreatedDate
-			// 
-			CreatedDate.DataPropertyName = "CreatedDate";
-			CreatedDate.HeaderText = "CreatedDate";
-			CreatedDate.Name = "CreatedDate";
+			btnUpdate.Click += btnUpdate_Click;
 			// 
 			// Form1
 			// 
@@ -272,7 +273,7 @@
 			Controls.Add(btnSave);
 			Controls.Add(dataGridView1);
 			Controls.Add(txtSearch);
-			 Controls.Add(label4);
+			Controls.Add(label4);
 			Controls.Add(txtNote);
 			Controls.Add(label3);
 			Controls.Add(txtTitle);

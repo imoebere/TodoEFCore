@@ -1,6 +1,4 @@
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System.Windows.Forms;
+
 using TodoEF.Data;
 using TodoEF.Model;
 
@@ -15,7 +13,7 @@ namespace TodoEF
 		public Form1()
 		{
 			InitializeComponent();
-			_dbFunction = new Data.DbFunction();
+			_dbFunction = new DbFunction();
 		}
 
 		private void btnSave_Click(object sender, EventArgs e)
@@ -80,15 +78,14 @@ namespace TodoEF
 			{
 				MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
-
 		}
 
 		private void btnDelete_Click(object sender, EventArgs e)
 		{
 			try
-			{ 
-				var t = _dbContext.TodoApp.Find((int)dataGridView1.SelectedCells[0].Value);
-				_dbContext.TodoApp.Remove(t);
+			{
+				var id = _dbContext.TodoApp.Find((int)dataGridView1.SelectedCells[0].Value);
+				_dbContext.TodoApp.Remove(id);
 				_dbContext.SaveChanges(true);
 				display();
 			}
@@ -96,6 +93,31 @@ namespace TodoEF
 			{
 				MessageBox.Show(ex.Message);
 			}
+		}
+
+		private void btnUpdate_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				var todoUpdate = _dbContext.TodoApp.Find((int)dataGridView1.SelectedCells[0].Value);
+				if (todoUpdate != null)
+				{
+					todoUpdate.Title = txtTitle.Text;
+					todoUpdate.Description = txtNote.Text;
+					_dbContext.SaveChanges(true);
+					display();
+				}
+				else
+				{
+					txtTitle.Text = string.Empty;
+					txtNote.Text = string.Empty;
+				}
+			}
+			catch(Exception ex)
+			{
+				MessageBox.Show(ex.Message);
+			}
+
 		}
 	}
 }
