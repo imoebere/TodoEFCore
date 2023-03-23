@@ -8,24 +8,22 @@ namespace TodoEF
 	public partial class Form1 : Form
 	{
 		private readonly IDbFunction _dbFunction;
-		private TodoDbContext _dbContext = new TodoDbContext();
-		//Todo todo = new Todo();
+		private readonly TodoDbContext _dbContext;
 
 		public Form1()
 		{
 			InitializeComponent();
 			_dbFunction = new DbFunction();
+			_dbContext = new TodoDbContext();
 		}
 
-		private void btnSave_Click(object sender, EventArgs e)
+		private async void btnSave_Click(object sender, EventArgs e)
 		{
 			try
 			{
 				string title = txtTitle.Text;
 				string note = txtNote.Text;
-				txtTitle.Focus();
-				txtNote.Focus();
-				_dbFunction.AddItem(title, note);
+				await Task.Run(()=>_dbFunction.AddItem(title, note));
 				txtNote.Clear();
 				txtTitle.Clear();
 				display();
@@ -81,60 +79,22 @@ namespace TodoEF
 			}
 		}
 
-		private void btnDelete_Click(object sender, EventArgs e)
+		private async void btnDelete_Click(object sender, EventArgs e)
 		{
-			try
-			{
-				var id = (int)dataGridView1.SelectedCells[0].Value;
-				if (id != null)
-				{
-					var todoItem = _dbContext.TodoApp.Find(id);
-
-					if (todoItem != null)
-					{
-						var confirmResult = MessageBox.Show("Are you sure you want to delete this item?",
-														   "Confirmation",
-														   MessageBoxButtons.YesNo,
-														   MessageBoxIcon.Warning);
-						if (confirmResult == DialogResult.Yes)
-						{
-							_dbContext.TodoApp.Remove(todoItem);
-							_dbContext.SaveChanges();
-							display();
-						}
-					}
-				}
-
-			}
-			catch (Exception ex)
-			{
-				MessageBox.Show(ex.Message);
-			}
+				var id = dataGridView1.SelectedCells[0].Value.ToString();
+				await Task.Run(()=> _dbFunction.DeleteItem(id));
+				display();
 		}
 
 		private void btnUpdate_Click(object sender, EventArgs e)
 		{
-			try
-			{
-				var todoUpdate = _dbContext.TodoApp.Find((int)dataGridView1.SelectedCells[0].Value);
-				if (todoUpdate != null)
-				{
-					todoUpdate.Title = txtTitle.Text;
-					todoUpdate.Description = txtNote.Text;
-					_dbContext.SaveChanges(true);
-					display();
-				}
-				else
-				{
-					txtTitle.Text = string.Empty;
-					txtNote.Text = string.Empty;
-				}
-			}
-			catch(Exception ex)
-			{
-				MessageBox.Show(ex.Message);
-			}
-
+				var id = dataGridView1.SelectedCells[0].Value.ToString();
+				string title = txtTitle.Text;
+			    string note = txtNote.Text;
+				_dbFunction.UpdateItem(id, title, note);
+				txtNote.Clear();
+				txtTitle.Clear();
+				display();
 		}
 	}
 }
