@@ -45,12 +45,15 @@ namespace TodoEF
 			display();
 		}
 
-		private void txtSearch_TextChanged(object sender, EventArgs e)
+		private async void txtSearch_TextChanged(object sender, EventArgs e)
 		{
 			string search = txtSearch.Text;
-			dataGridView1.DataSource = _dbContext.TodoApp
-						 .Where(x => x.Title.Contains(search)).ToList();
-			lblRecord.Text = $"Total Records: {dataGridView1.RowCount}";
+			var result = await _dbFunction.SearchItem(search);
+			if (result != null && result.Any())
+			{
+				dataGridView1.DataSource = result;
+				lblRecord.Text = $"Total Records: {dataGridView1.RowCount}";
+			}
 		}
 
 		private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -86,15 +89,18 @@ namespace TodoEF
 				display();
 		}
 
-		private void btnUpdate_Click(object sender, EventArgs e)
+		private async void btnUpdate_Click(object sender, EventArgs e)
 		{
 				var id = dataGridView1.SelectedCells[0].Value.ToString();
 				string title = txtTitle.Text;
 			    string note = txtNote.Text;
-				_dbFunction.UpdateItem(id, title, note);
-				txtNote.Clear();
-				txtTitle.Clear();
+				await Task.Run(()  =>  _dbFunction.UpdateItem(id, title, note));
 				display();
+			txtTitle.Clear();
+			txtNote.Clear();
+				
+				
+
 		}
 	}
 }

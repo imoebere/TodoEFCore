@@ -12,5 +12,8 @@ namespace TodoEF.Data
 		public bool AddItem(string title, string note);
 		public bool DeleteItem(string id);
 		public bool UpdateItem(string id, string title, string note);
+
+		public Task<List<Todo>> SearchItem(string search);
+		public  Task<List<Todo>> GetAllItem();
 	}
 }

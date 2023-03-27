@@ -1,5 +1,7 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel;
+using System.Windows.Forms;
 using TodoEF.Model;
 
 namespace TodoEF.Data
@@ -90,8 +92,10 @@ namespace TodoEF.Data
 				{
 					update.Title = title;
 					update.Description = note;
+					dbContext.TodoApp.Update(update);
 					if(dbContext.SaveChanges() > 0)
 					return true;
+
 				}
 				else
 				{
@@ -105,6 +109,16 @@ namespace TodoEF.Data
 			}
 			return false;
 		}
-			
+
+		public async Task<List<Todo>> SearchItem (string search)
+		{
+			return await dbContext.TodoApp.Where(x => x.Title.Contains(search)).ToListAsync();
+		}
+
+		public async Task<List<Todo>> GetAllItem()
+		{
+			return await dbContext.TodoApp.ToListAsync();
+		}
+
 	}
 }
